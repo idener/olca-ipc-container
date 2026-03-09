@@ -30,3 +30,12 @@ curl -d '{
   -H "Content-Type: application/json"\
   -X POST http://localhost:3000
 ```
+
+## Release procedure
+To deploy a new version of the microservice in the production environment, follow these steps:
+
+1. Confirm that all modifications have been merged into the main branch.
+2. Go to the "Releases" section and click on "Draft a new release".
+3. In the "Choose a tag" interface, generate a new tag conforming to the semantic versioning convention (vMAJOR.MINOR.PATCH).
+4. Publish the release and await the completion of the CI/CD process.
+
