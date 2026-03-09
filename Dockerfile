@@ -14,5 +14,4 @@ FROM ghcr.io/greendelta/gdt-server-native AS native
 FROM ${BASE_IMAGE}
 COPY --from=mvn /olca-ipc/target/lib /app/lib
 COPY --from=native /app/native /app/native
-COPY --chmod=0755 run.sh /app
-ENTRYPOINT ["/app/run.sh"]
+ENTRYPOINT ["java", "-Xmx4096M", "-cp", "/app/lib/*", "org.openlca.ipc.Server", "-timeout", "30", "-native", "/app/native", "-data", "/app/data"]
