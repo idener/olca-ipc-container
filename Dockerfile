@@ -14,6 +14,5 @@ FROM ghcr.io/greendelta/gdt-server-native AS native
 FROM ${BASE_IMAGE}
 COPY --from=mvn /olca-ipc/target/lib /app/lib
 COPY --from=native /app/native /app/native
-COPY run.sh /app
-RUN chmod +x /app/run.sh
+COPY --chmod=0755 run.sh /app
 ENTRYPOINT ["/app/run.sh"]
