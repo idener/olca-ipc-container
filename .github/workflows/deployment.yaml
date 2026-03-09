@@ -66,5 +66,5 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           build-args: |
-            BUILD_IMAGE=dhi.io/maven:3-jdk-17-debian13-dev
-            BASE_IMAGE=dhi.io/eclipse-temurin:17-jre-debian13
+            BUILD_IMAGE=dhi.io/maven:3-jdk17-debian13-dev
+            BASE_IMAGE=dhi.io/eclipse-temurin:17-debian13
