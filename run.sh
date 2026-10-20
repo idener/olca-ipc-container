@@ -1,2 +1,2 @@
 #!/bin/bash
-java -Xmx4096M -cp "/app/lib/*" org.openlca.ipc.Server -timeout 30 -native /app/native -data /app/data "$@"
+java -XX:MaxRAMPercentage=75 -Dderby.stream.error.file=/app/data/derby.log -cp "/app/lib/*" org.openlca.ipc.Server -timeout 30 -native /app/native -data /app/data "$@"
