@@ -12,6 +12,15 @@ FROM ghcr.io/greendelta/gdt-server-native@sha256:4a5b20ea330bbbf1889839822214db3
 
 # final image
 FROM ${BASE_IMAGE}
+# Distrust the roots behind the compromised eMudhra intermediates (CVE-2026-111943)
+RUN if [ -f /etc/ca-certificates.conf ]; then \
+      { apt-get update && apt-get install -y --no-install-recommends --only-upgrade ca-certificates; } || true; \
+      sed -i -e 's|^mozilla/emSign_ECC_Root_CA_-_G3.crt|!&|' -e 's|^mozilla/Comodo_AAA_Services_root.crt|!&|' /etc/ca-certificates.conf \
+      && update-ca-certificates; \
+    fi; rm -rf /var/lib/apt/lists/*
+# Remove the eMudhra ECC G3 root from the JDK trust store (CVE-2026-111943)
+RUN keytool -delete -cacerts -storepass changeit \
+      -alias "cn_emsign_ecc_root_ca__g3,o_emudhra_technologies_limited,ou_emsign_pki,c_in [jdk]" 2>/dev/null || true
 COPY --from=mvn /olca-ipc/target/lib /app/lib
 COPY --from=native /app/native /app/native
 # heap sized from the container memory limit instead of a fixed -Xmx;
