@@ -1,0 +1,18 @@
+branchName: '${issue.number}-${issue.title,}'
+branches:
+  - label: feature
+    prefix: feature/
+  - label: enhancement
+    prefix: enhancement/
+  - label: performance
+    prefix: performance/
+  - label: fix
+    prefix: fix/
+  - label: bug
+    prefix: bug/
+  - label: patch
+    prefix: patch/
+  - label: docs
+    prefix: docs/
+  - label: research
+    skip: true

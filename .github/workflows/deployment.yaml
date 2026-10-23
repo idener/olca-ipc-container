@@ -2,11 +2,11 @@
 name: Image deployment
 
 #
-# ┌──────┐   ┌───────┐   ┌────────┐   ┌──────────┐
-# │ Test │   │ Build │   │Push to │   │Update K8s│
-# │      ├──►│ Image ├──►│Registry├──►│manifests │
-# └──────┘   └───────┘   └────────┘   └──────────┘
-# 
+# ┌───────┐   ┌────────┐   ┌──────────┐
+# │ Build │   │Push to │   │Update K8s│
+# │ Image ├──►│Registry├──►│manifests │
+# └───────┘   └────────┘   └──────────┘
+#
 
 on:
   release:
@@ -15,7 +15,7 @@ on:
 
 
 env:
-  IMAGE_NAME: common/openlca
+  IMAGE_NAME: terasun/openlca
   REGISTRY_URL: registry.idener.ai
 
 

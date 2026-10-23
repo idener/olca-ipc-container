@@ -39,3 +39,31 @@ To deploy a new version of the microservice in the production environment, follo
 3. In the "Choose a tag" interface, generate a new tag conforming to the semantic versioning convention (vMAJOR.MINOR.PATCH).
 4. Publish the release and await the completion of the CI/CD process.
 
+## CI/CD workflows
+
+The workflows follow `idener/generic-repo-template` and run on `idener-runners`.
+The container image is `registry.idener.ai/terasun/openlca`.
+
+- **Code Analysis**: lints changed files in pull requests to `main`; manual runs
+  lint the full codebase.
+- **Create Issue Branch**: creates a branch when an issue is assigned, using
+  `.github/issue-branch.yml`.
+- **Draft Release**: updates the release draft on pushes to `main` and labels pull
+  requests using `.github/release-drafter.yml`.
+- **Image deployment** (`deployment.yaml`): publishes a semantic version tag
+  (e.g. `1.2.3`) when a release is published. Manual execution and image
+  tagging follow the generic repository template.
+- **Image deployment on development environment** (`deployment-dev.yaml`): run
+  manually from Actions, selecting the branch to build. Publishes `latest` and
+  `sha-<short-commit>` tags.
+
+The image workflows build and publish containers; Kubernetes rollouts are managed
+separately.
+
+Required Actions secrets: `REGISTRY_USERNAME` and `REGISTRY_PASSWORD`.
+Both image workflows also need `DOCKERHUB_USERNAME` and `DOCKERHUB_TOKEN`
+to pull the Docker Hardened Images from `dhi.io`, using the same base images for
+development and releases.
+
+The runner must support `actions/checkout@v6` (Actions Runner 2.329.0 or newer
+for authenticated Git operations from container actions) and Docker/Buildx.
